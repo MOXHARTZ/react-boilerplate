@@ -1,15 +1,3 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import Main from './Main';
+import { atom } from "jotai";
 
-const store = configureStore({
-    reducer: {
-        main: Main
-    }
-})
-
-export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export type RootState = ReturnType<typeof store.getState>;
-
-export default store;
+export const visibleAtom = atom(false);

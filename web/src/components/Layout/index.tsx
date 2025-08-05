@@ -1,26 +1,21 @@
 import { Outlet, useNavigate } from 'react-router'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { useAppDispatch, useAppSelector } from '@/stores'
-import useNuiEvent from '@/hooks/useNuiEvent'
-import { setVisible } from '@/stores/Main'
+import useVisible from '@/hooks/useVisible'
+import { useExitListener } from '@/hooks/useExitListener'
 
 export default function Layout() {
     const [autoAnimate] = useAutoAnimate()
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
-    const { visible } = useAppSelector(state => state.main)
-    useNuiEvent('toggle_visible', (visible: boolean) => {
-        dispatch(setVisible(visible));
-        if (visible) {
+    const [visible, setVisible] = useVisible<{ visible: boolean }>('toggle_visible', (data) => {
+        if (data.visible) {
             navigate('/')
         }
-    });
+    })
+    useExitListener(setVisible)
     return (
         <div ref={autoAnimate} className='flex justify-between w-screen h-screen p-4 gap-4'>
             {visible && (
-                <>
-                    <Outlet />
-                </>
+                <Outlet />
             )}
         </div>
     )

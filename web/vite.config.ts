@@ -1,10 +1,24 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import * as path from 'path';
+import viteCompression from 'vite-plugin-compression2';
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
+      },
+    }),
+    viteCompression({
+      algorithms: ['gzip'],
+      threshold: 10240,
+    }),
+    // use for debug build size
+    // visualizer({ open: true }),
+  ],
   base: './',
   server: {
     port: 3005,

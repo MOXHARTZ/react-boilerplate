@@ -7,6 +7,9 @@ import useNuiEvent from './hooks/useNuiEvent'
 import { ReadyListener } from './utils/types'
 import { initReactI18next } from 'react-i18next'
 import i18n from "i18next";
+if (isEnvBrowser()) {
+  import('@/mocks/open');
+}
 
 function App() {
   useEffect(() => {
